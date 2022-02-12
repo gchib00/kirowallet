@@ -1,12 +1,30 @@
-// import Head from 'next/head'
-// import Image from 'next/image'
-// import styles from '../styles/Home.module.css'
+import styled from 'styled-components';
+import AboutBlock from '../components/Homepage/AboutBlock';
+import CTABlock from '../components/Homepage/CTABlock';
+import VisualBlock from '../components/Homepage/VisualBlock';
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 94.5vh;
+`;
+const SecondaryContainer = styled.div`
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 
 const Home = () => {
   return ( 
-    <div>
-      Homepage.
-    </div>
+    <MainContainer>
+      <CTABlock />
+      <SecondaryContainer>
+        <AboutBlock />
+        <VisualBlock />
+      </SecondaryContainer>
+    </MainContainer>
   );
 };
 

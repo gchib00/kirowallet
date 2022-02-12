@@ -8,7 +8,7 @@ const MainContainer = styled.header`
   width: 100%;
   max-width: 100vw;
   height: 60px;
-  background-color: #c3c3c3;
+  background-color: #F5F3F4;
   display: flex;
   justify-content: space-between;
   align-items: center;
