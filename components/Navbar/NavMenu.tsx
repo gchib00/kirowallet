@@ -12,10 +12,10 @@ const MainContainer = styled.div`
   position: absolute;
   right: 0;
   transition: 500ms;
+  z-index: 5;
 `;
 const NavList = styled.ul`
   transition: 200ms;
-  z-index: 5;
 `;
 
 export const NavMenu = () => {
