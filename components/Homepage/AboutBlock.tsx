@@ -12,25 +12,45 @@ const MainContainer = styled.div`
   color: white;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+`;
+const AboutItemContainer = styled.div`
+  min-height: 30vh;
+  width: 13vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 const SVGContainer = styled.div`
   width: 160px;
   height: 160px;
-  border: 1px solid white;
+`;
+const AboutItemText = styled.p`
+  margin: 5px;
+  text-align: center;
 `;
 
 const AboutBlock = () => {
   return (
     <MainContainer>
-      <SVGContainer>
-        <Image src={Icon_Control} alt='control icon'/> 
-      </SVGContainer> 
-      <SVGContainer>
-        <Image src={Icon_Meditation} alt='meditation icon'/> 
-      </SVGContainer> 
-      <SVGContainer>
-        <Image src={Icon_Collaboration} alt='meditation icon'/> 
-      </SVGContainer> 
+      <AboutItemContainer>
+        <SVGContainer>
+          <Image src={Icon_Control} alt='control icon'/> 
+        </SVGContainer> 
+        <AboutItemText>Track and visualize your expenses</AboutItemText>
+      </AboutItemContainer>
+      <AboutItemContainer>
+        <SVGContainer>
+          <Image src={Icon_Collaboration} alt='meditation icon'/> 
+        </SVGContainer> 
+        <AboutItemText>Collaborate with multiple people by sharing the same dashboard</AboutItemText>
+      </AboutItemContainer>
+      <AboutItemContainer>
+        <SVGContainer>
+          <Image src={Icon_Meditation} alt='meditation icon'/> 
+        </SVGContainer> 
+        <AboutItemText>Easy to set up and use</AboutItemText>
+      </AboutItemContainer>
     </MainContainer>
   );
 };
