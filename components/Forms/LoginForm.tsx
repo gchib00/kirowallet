@@ -25,8 +25,13 @@ const SubmitButton = styled.button`
   border-color: #0A46E4;
 }
 `;
-const RegisterLink = styled.div`
+const RegisterText = styled.div`
   margin: 5px auto 5px auto;
+`;
+const RegisterBtn = styled.span`
+  color: #E5383B;
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
 interface Props {
@@ -46,9 +51,9 @@ const LoginForm = ({ setRegisterationModal }: Props) => {
         autoComplete="off"
       />
       <SubmitButton type="submit">Login</SubmitButton>
-      <RegisterLink>
-        Don&apos;t have an account yet? <a onClick={() => setRegisterationModal(true)}>Register</a>
-      </RegisterLink>
+      <RegisterText>
+        Don&apos;t have an account yet? <RegisterBtn onClick={() => setRegisterationModal(true)}>Register</RegisterBtn>
+      </RegisterText>
     </Fragment>
   );
 };
