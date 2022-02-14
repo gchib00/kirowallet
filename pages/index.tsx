@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import AuthModalContext from '../components/context/AuthModalContext';
 import AboutBlock from '../components/Homepage/AboutBlock';
 import CTABlock from '../components/Homepage/CTABlock';
 import VisualBlock from '../components/Homepage/VisualBlock';
+import AuthModal from '../components/Modals/AuthModal';
 
 const MainContainer = styled.div`
   display: flex;
@@ -17,14 +20,19 @@ const SecondaryContainer = styled.div`
 `;
 
 const Home = () => {
+  const [loginModal, setLoginModal] = useState<boolean>(false);
+  
   return ( 
-    <MainContainer>
-      <CTABlock />
-      <SecondaryContainer>
-        <AboutBlock />
-        <VisualBlock />
-      </SecondaryContainer>
-    </MainContainer>
+    <AuthModalContext.Provider value={{ loginModal, setLoginModal }}>
+      <MainContainer>
+        <CTABlock />
+        <SecondaryContainer>
+          <AboutBlock />
+          <VisualBlock />
+        </SecondaryContainer>
+      </MainContainer>
+      {loginModal ? <AuthModal loginModal={loginModal} setLoginModal={setLoginModal} /> : null}
+    </AuthModalContext.Provider>
   );
 };
 

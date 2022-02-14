@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import AuthModalContext from '../context/AuthModalContext';
 
 const MainContainer = styled.div`
   width: 50%;
@@ -43,11 +44,17 @@ const CTAButton = styled.button`
 `;
 
 const CTABlock = () => {
+  const { setLoginModal } = useContext(AuthModalContext);
+
+  const handleCTAClick = () => {
+    setLoginModal(true);
+  };
+
   return (
     <MainContainer>
       <SecondaryContainer>
         <HeaderText>Personal finance made easy</HeaderText>
-        <CTAButton>Get started</CTAButton>
+        <CTAButton onClick={handleCTAClick}>Get started</CTAButton>
         <p style={{ color: 'white' }}>
           *It takes just a few seconds to set up your dashboard!
         </p>
