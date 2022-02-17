@@ -1,8 +1,8 @@
 import { PrismaClient, User } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { UserLoginObj } from '../../../types';
 import bcrypt from 'bcrypt';
 import jwt, { Secret } from 'jsonwebtoken';
+import { UserLoginObj } from '../../../types';
 
 const prisma = new PrismaClient();
    
@@ -12,20 +12,20 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
   }
   try { 
     const credentials: UserLoginObj = {
-      username: req.body.username,
+      email: req.body.email,
       password: req.body.password,
     };
     const user = await prisma.user.findUnique({
       where: {
-        username: credentials.username,
+        email: credentials.email,
       },
     }) as User;
     const match: boolean = await bcrypt.compare(credentials.password, user.password); //check if password is correct
     if (!match) { //send error if the provided password doesn't match the user's password
-      res.status(400).send({ message: 'Username or password is incorrect!' });
+      res.status(400).json({ message: 'Username or password is incorrect!' });
     } else {
       const loginToken = jwt.sign({ id: user.id }, process.env.SECRET_VALUE_FOR_TOKEN as Secret); //generate a jwt token
-      res.status(200).send({ token: loginToken, user: user });  
+      res.status(200).json({ token: loginToken, user: user });  
     }
   } catch (err){
     res.status(400).send({ message: 'Username or password is incorrect!' });

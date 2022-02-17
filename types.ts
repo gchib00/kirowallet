@@ -1,15 +1,13 @@
 //Backend
 
 //Auth:
-export interface UserRegistrationObj extends User {
+export interface UserRegistrationObj {
+  email: string;
+  password: string;
   repeatedPassword: string;
 }
 export interface UserLoginObj {
-  username: string;
+  email: string;
   password: string;
 }
-export interface User {
-  username: string;
-  email?: string;
-  password: string;
-}
+ 

@@ -1,6 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+const Form = styled.form`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
 const InputField = styled.input`
   height: 38px;
   padding-left: 8px;
@@ -27,24 +33,34 @@ const SubmitButton = styled.button`
 `;
 
 const RegisterForm = () => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [repeatedPassword, setRepeatedPassword] = useState<string>('');
+
   return (
-    <Fragment>
+    <Form>
       <InputField 
         placeholder="Email address" 
-        type="text"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <InputField 
         placeholder="Password" 
         type="password"
         autoComplete="off"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <InputField 
         placeholder="Repeat password" 
         type="passwordRepeat"
         autoComplete="off"
+        value={repeatedPassword}
+        onChange={(e) => setRepeatedPassword(e.target.value)}
       />
       <SubmitButton type="submit">Register</SubmitButton>
-    </Fragment>
+    </Form>
   );
 };
 

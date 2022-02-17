@@ -15,36 +15,28 @@ const handle = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).json({ message: 'Only "POST" method is allowed' });
   }
   const credentials: UserRegistrationObj = {
-    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
     repeatedPassword: req.body.repeatedPassword,
   };
   if (credentials.password === credentials.repeatedPassword) {
-    const user = await prisma.user.findUnique({ //check if username already exists in DB
-      where: {
-        username: credentials.username,
-      },
-    });
     const email = await prisma.user.findUnique({ //check if an user by this email already exists in DB
       where: {
         email: credentials.email,
       },
     });
-    if (user || email) { 
-      return res.status(400).send({ message: 'This user already exists. Please choose a different username/email and try again.' });
+    if (email) { 
+      return res.status(400).send({ message: 'This email address is unavailable.' });
     }
     try {
       const hashedPassword = await hashPassword(credentials.password); //encrypt the password before saving it to DB
-
       const newUser = await prisma.user.create({ //save user to DB
         data: {
-          username: credentials.username,
           email: credentials.email,
           password: hashedPassword,
         },
       });
-      return res.status(200).send(`User ${newUser.username} has been registered successfully.`);
+      return res.status(200).send(`User ${newUser.email} has been registered successfully.`);
     } catch (err) {
       return res.status(400).send({ message: err });
     }

@@ -31,7 +31,7 @@ const Home = () => {
           <VisualBlock />
         </SecondaryContainer>
       </MainContainer>
-      {loginModal ? <AuthModal loginModal={loginModal} setLoginModal={setLoginModal} /> : null}
+      {loginModal ? <AuthModal /> : null}
     </AuthModalContext.Provider>
   );
 };
