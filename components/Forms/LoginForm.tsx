@@ -48,7 +48,7 @@ interface Props {
 }
 
 const LoginForm = ({ setRegisterationModal }: Props) => {
-  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const { setLoginModal } = useContext(AuthModalContext);
@@ -56,7 +56,7 @@ const LoginForm = ({ setRegisterationModal }: Props) => {
   
   const attemptLogin = async () => {
     const credentials = {
-      username: username,
+      email: email,
       password: password,
     };
     const request = await fetch('/api/users/login', { //pass credentials to the backend
@@ -84,8 +84,8 @@ const LoginForm = ({ setRegisterationModal }: Props) => {
       <InputField 
         placeholder='Email address' 
         type='text'
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <InputField 
         placeholder='Password' 

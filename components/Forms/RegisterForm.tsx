@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
+import { UserLoginObj } from '../../types';
+import AuthModalContext from '../context/AuthModalContext';
+import LoggedUserContext from '../context/LoggedUserContext';
+import FormErrorMessage from '../Misc/FormErrorMessage';
 
 const Form = styled.form`
   width: 100%;
@@ -33,33 +37,77 @@ const SubmitButton = styled.button`
 `;
 
 const RegisterForm = () => {
+  const [error, setError] = useState<string | null>(null);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [repeatedPassword, setRepeatedPassword] = useState<string>('');
+  const { setLoginModal } = useContext(AuthModalContext);
+  const { setLoggedUser } = useContext(LoggedUserContext);
+  
+  const autoLogin = async (credentials: UserLoginObj) => {
+    const request = await fetch('/api/users/login', { //pass credentials to the backend
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials),
+    });
+    const response = await request.json();
+    //save token to localStorage so that user can be automatcally logged in after they reconnect to the app
+    localStorage.setItem('token', response.token);
+    setLoggedUser(response.user); //save user to the state
+    setLoginModal(false); //close the modal
+  };
+  const attemptUserRegister = async () => {
+    setError(''); //make sure error gets removed (in case it was already present)
+    const newUserObj = {
+      email: email,
+      password: password,
+      repeatedPassword: repeatedPassword,
+    };
+    const request = await fetch('/api/users/createNew', { //pass newUserObj to the backend
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newUserObj),
+    });
+    if (!request.ok) { //display error message if request fails
+      const response = await request.json();
+      return response.message ? setError(response.message) : setError(response.error);
+    } else { //if registration is successful, automatically log-in the user
+      const credentials = {
+        email: newUserObj.email,
+        password: newUserObj.password,
+      };
+      autoLogin(credentials);
+    }
+  };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    attemptUserRegister();
+  };
 
   return (
-    <Form>
+    <Form onSubmit={(e) => handleSubmit(e)}>
       <InputField 
-        placeholder="Email address" 
-        type="email"
+        placeholder='Email address' 
+        type='email'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <InputField 
-        placeholder="Password" 
-        type="password"
-        autoComplete="off"
+        placeholder='Password' 
+        type='password'
+        autoComplete='off'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <InputField 
-        placeholder="Repeat password" 
-        type="passwordRepeat"
-        autoComplete="off"
+        placeholder='Repeat password' 
+        type='password'
+        autoComplete='off'
         value={repeatedPassword}
         onChange={(e) => setRepeatedPassword(e.target.value)}
       />
-      <SubmitButton type="submit">Register</SubmitButton>
+      <SubmitButton type='submit'>Register</SubmitButton>
+      <FormErrorMessage errorText={error} /> 
     </Form>
   );
 };
