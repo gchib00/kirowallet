@@ -1,6 +1,5 @@
 //Backend
 
-//Auth:
 export interface UserRegistrationObj {
   email: string;
   password: string;
@@ -11,3 +10,11 @@ export interface UserLoginObj {
   password: string;
 }
  
+//Frontned
+
+export interface User {
+  createdAt: string;
+  email: string;
+  password: string;
+  id: number;
+}
