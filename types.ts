@@ -9,7 +9,12 @@ export interface UserLoginObj {
   email: string;
   password: string;
 }
- 
+export interface IncomeObj {
+  name: string;
+  type: string;
+  value: number;
+}
+export interface ExpenseObj extends IncomeObj {}
 //Frontned
 
 export interface User {
